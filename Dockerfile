@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG FLARUM_VERSION=v1.8.5
+ARG FLARUM_VERSION=v1.8.8
 ARG ALPINE_VERSION=3.19
 
 FROM crazymax/yasu:latest AS yasu
@@ -64,9 +64,12 @@ RUN mkdir -p /opt/flarum \
   && rm -rf /root/.composer /tmp/*
 
 COPY rootfs /
+COPY list /data/extensions/list
+
+COPY public /opt/flarum/public
+COPY public/assets /data/assets
 
 EXPOSE 8000
 WORKDIR /opt/flarum
-VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/init" ]
